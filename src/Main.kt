@@ -7,9 +7,13 @@ fun main() {
     val numberToGuess = Random.nextInt(1, 101) // 101 because upper bound is exclusive
     println("I'm thinking of a number between 1 and 100. Start guessing!")
 
-    // Loop until the user guesses correctly
-    while (true) {
-        println("Enter your guess:")
+    // Set the maximum number of guesses
+    val maxGuesses = 12
+    var guessCount= 0
+
+    // Loop until the user guesses correctly or runs out of guesses
+    while (guessCount < maxGuesses) {
+        println("Guess #${guessCount + 1}: Enter your guess:")
         val guess = readlnOrNull()?.toIntOrNull()
 
         // Check for invalid input
@@ -18,14 +22,20 @@ fun main() {
             continue
         }
 
+        // Increment guess count after valid input
+        guessCount++
+
         // Compare the guess to the target number
         if (guess < numberToGuess) {
             println("Too low!")
         } else if (guess > numberToGuess) {
             println("Too high!")
         } else {
-            println("You got it! The number was $numberToGuess.")
-            break
+            println("You got it! The number was $numberToGuess. It took you $guessCount guesses.")
+            return // Exit the program
         }
     }
+
+    // If we exit the loop, they ran out of guesses
+    println("Game over! You ran out of guesses. The number was $numberToGuess.")
 }
